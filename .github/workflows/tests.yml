@@ -1,19 +1,62 @@
 name: Automatisation des tests
 on: push
 jobs:
-  Compilation:
+  Test_Addition:
     runs-on: ubuntu-latest
     steps:
-      - name: Compilation
+      - name: Checkout du code
+        uses: actions/checkout@v2
+
+      - name: Configuration et exécution du test d'addition
         run: |
-          last_directory=$(basename ${{ runner.workspace }})
-          git clone https://github.com/${{ github.repository }}.git
-          cd ./$last_directory
           mkdir build
           cd build
           cmake ..
           make
-          make test
+          ctest -R t1
+
+  Test_Subtraction:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v2
+
+      - name: Configuration et exécution du test de soustraction
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+          ctest -R t2
+
+  Test_Multiplication:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v2
+
+      - name: Configuration et exécution du test de multiplication
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+          ctest -R t3
+
+  Test_Division:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v2
+
+      - name: Configuration et exécution du test de division
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+          ctest -R t4
+
   Test_Square:
     runs-on: ubuntu-latest
     steps:
@@ -29,7 +72,7 @@ jobs:
           ctest -R square --verbose --output-on-failure --square_values "5;10;15"
   Deployment:
     runs-on: ubuntu-latest
-    needs: Compilation
+    needs: [Test_Addition, Test_Subtraction, Test_Multiplication, Test_Division, Test_Square]
     steps:
       - name: Déploiement sur serveur
         run: echo "deploy"
