@@ -14,6 +14,19 @@ jobs:
           cmake ..
           make
           make test
+  Test_Square:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v2
+
+      - name: Configuration et exécution du test de la fonction square
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+          ctest -R square --verbose --output-on-failure --square_values "5;10;15"
   Deployment:
     runs-on: ubuntu-latest
     needs: Compilation
