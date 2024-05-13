@@ -25,7 +25,9 @@ int main(int argc, char *argv[]){
 	else if (strcmp(op, "div") == 0) {
 		r = _div(atof(a), atof(b));
 		printf("%lf",r);
-	}
+	} else if (strcmp(op, "square") == 0) {
+            r = square(atof(a)); // Appel de la fonction square
+        } 
 	else {printf("Erreur de parametres");}
 	}
 	else {printf("Erreur de parametres");}
