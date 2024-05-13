@@ -69,7 +69,7 @@ jobs:
           cd build
           cmake ..
           make
-          ctest -R square --verbose --output-on-failure --square_values "5;10;15"
+          ctest -R t5
   Deployment:
     runs-on: ubuntu-latest
     needs: [Test_Addition, Test_Subtraction, Test_Multiplication, Test_Division, Test_Square]
